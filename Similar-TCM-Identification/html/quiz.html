@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>評量測驗</title>
+    <meta name="description" content="牛刀小試，學以致用。">
+    <link rel="shortcut icon" href="../images/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../dist/style/main.min.css">
+    <link rel="stylesheet" href="../dist/style/quiz.min.css">
+    <script src="../dist/js/quiz.min.js"></script>
+    <script src="../dist/js/testbank.min.js"></script>
+    <!-- Open Graph -->
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="評量測驗" />
+    <meta property="og:description" content="牛刀小試，學以致用。" />
+    <meta property="og:image" content="https://similartcm.tadralling.com/images/tcm/handout-cover.png" />
+    <meta property="og:url" content="https://similartcm.tadralling.com/html/quiz.html" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-187118976-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-187118976-1');
+    </script>
+</head>
+
+<body>
+    <header>
+        <div class="banner-thumbnail-wrapper">
+            <img src="../images/cover-image.png" alt="">
+            <div class="desc-wrapper">
+                <h1>評量測驗</h1>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="wrap">
+            <div class="control">
+                <h2 class="score">您的得分為：<span class="num"></span> 分</h2>
+                <button id="newQuiz" class="turn-page-button">再考一次</button>
+            </div>
+            <div class="quiz"></div>
+        </div>
+    </main>
+    <footer>
+        <div id="turn-page">
+            <button id="send" class="turn-page-button">交卷</button>
+            <a href="../index.html" id="home-page">
+                <button class="turn-page-button">回首頁</button></a>
+        </div>
+        <div id="copy-right">
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="創用 CC 授權條款" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />本著作係採用<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">創用 CC 姓名標示-非商業性-禁止改作 4.0 國際 授權條款</a>授權
+        </div>
+    </footer>
+</body>
+
+</html>
