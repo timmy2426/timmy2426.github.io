@@ -1,0 +1,575 @@
+/* font */
+@import url("https://tadralling.com/dist/font-awesome-5-free/css/all.min.css");
+@font-face {
+  font-family: RobotoMono;
+  src: url("https://tadralling.com/dist/font/RobotoMono-VariableFont_wght.ttf");
+}
+/* light-mode */
+:root {
+  --main-color: #842b00;
+  --minor-color: #cf9e9e;
+  --text-color: #2f0000;
+  --activation-color: #ff0000;
+  --suspension-color: #ffa042;
+  --standby-color: #008000;
+  --background-color: #f5f5f5;
+  --box-color: #fbfbfb;
+  --border-color: rgba(128, 128, 128, 0.1);
+  --shadow-color: rgba(128, 128, 128, 0.3);
+  --scrollbar-color: #d0d0d0;
+  --transparent-color: transparent;
+}
+/* dark-mode */
+.dark-mode {
+  --main-color: #809bce;
+  --minor-color: #cfb680;
+  --text-color: #e0e0e0;
+  --activation-color: #f679c2;
+  --suspension-color: #f39d68;
+  --standby-color: #b9d2b1;
+  --background-color: #121212;
+  --box-color: #202020;
+  --border-color: #202020;
+  --shadow-color: none;
+  --scrollbar-color: #3c3c3c;
+  --transparent-color: #121212;
+}
+/* scrollbar */
+::-webkit-scrollbar,
+#dashboard #stopwatch-record-area #stopwatch-records::-webkit-scrollbar,
+#dashboard #timer-area #timer-columns::-webkit-scrollbar {
+  width: 10px;
+  background-color: var(--box-color);
+}
+::-webkit-scrollbar-thumb,
+#dashboard #stopwatch-record-area #stopwatch-records::-webkit-scrollbar-thumb,
+#dashboard #timer-area #timer-columns::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+  background-color: var(--scrollbar-color);
+}
+/* layout & basic */
+body {
+  background-color: var(--background-color);
+}
+#dashboard {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 4fr) minmax(0, 3fr);
+  grid-template-rows: repeat(4, auto);
+  grid-template-areas:
+    "stopwatch time timer"
+    "stopwatch-record countdown-timer timer"
+    "stopwatch-record status timer"
+    "control control timer";
+  font-family: RobotoMono;
+  background-color: var(--transparent-color);
+}
+#dashboard h1,
+#dashboard h2,
+#dashboard h3,
+#dashboard p,
+#dashboard span {
+  color: var(--text-color);
+}
+#dashboard h2 {
+  text-align: center;
+  font-size: 30px;
+  margin: 25px 0;
+}
+#dashboard h3 {
+  text-align: center;
+  font-size: 25px;
+  margin: 20px 0;
+}
+#dashboard p {
+  text-align: center;
+  margin: 0.5em 0;
+}
+#dashboard input[type="text"] {
+  color: var(--text-color);
+  background: var(--box-color);
+  border-color: var(--text-color);
+  outline: none;
+}
+#dashboard button {
+  color: var(--box-color);
+  border-color: var(--main-color);
+  background-color: var(--main-color);
+  margin: 10px;
+}
+#dashboard ::placeholder {
+  color: var(--text-color);
+}
+#dashboard #time-area,
+#dashboard #stopwatch-area,
+#dashboard #stopwatch-record-area,
+#dashboard #countdown-timer-area,
+#dashboard #status-area,
+#dashboard #control-area,
+#dashboard #timer-area {
+  background-color: var(--box-color);
+  padding: 0 30px 30px;
+  margin: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  box-shadow: 10px 10px 15px var(--shadow-color),
+    inset 5px 5px 15px var(--shadow-color);
+}
+#dashboard #time-area {
+  grid-area: time;
+}
+#dashboard #stopwatch-area {
+  grid-area: stopwatch;
+}
+#dashboard #stopwatch-record-area {
+  grid-area: stopwatch-record;
+}
+#dashboard #countdown-timer-area {
+  grid-area: countdown-timer;
+}
+#dashboard #status-area {
+  grid-area: status;
+}
+#dashboard #control-area {
+  grid-area: control;
+}
+#dashboard #timer-area {
+  grid-area: timer;
+}
+@media (max-width: 1200px) {
+  #dashboard {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 4fr);
+    grid-template-rows: repeat(5, auto);
+    grid-template-areas:
+      "stopwatch time"
+      "stopwatch-record countdown-timer"
+      "stopwatch-record status"
+      "control control"
+      "timer timer";
+  }
+}
+@media (max-width: 768px) {
+  #dashboard {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: repeat(7, auto);
+    grid-template-areas:
+      "time"
+      "stopwatch"
+      "stopwatch-record"
+      "countdown-timer"
+      "status"
+      "control"
+      "timer";
+  }
+}
+/* time-area */
+#time-area h2::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: normal;
+  content: "\f073";
+  padding-right: 0.5em;
+}
+#time-area p {
+  font-size: 48px;
+}
+#time-area span {
+  display: inline-block;
+}
+#time-area p #session {
+  margin-left: 1em;
+  font-size: 36px;
+}
+#time-area p.date {
+  font-size: 28px;
+}
+#time-area p.date #weeks {
+  margin-left: 1em;
+}
+@media (max-width: 576px) {
+  #time-area p #session,
+  #time-area p.date #weeks {
+    display: block;
+    margin: 0.5em 0;
+  }
+}
+/* stopwatch-area */
+#stopwatch-area h2::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: bold;
+  content: "\f2f2";
+  padding-right: 0.5em;
+}
+#stopwatch-area p {
+  font-size: 36px;
+}
+#stopwatch-area p span.dot,
+#stopwatch-area p span#s-tms {
+  font-size: 16px;
+}
+#stopwatch-area .controls {
+  text-align: center;
+  font-size: 0;
+}
+#stopwatch-area .controls div {
+  display: inline-block;
+  font-size: 0;
+}
+/* stopwatch-record-area */
+#stopwatch-record-area h2::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: normal;
+  content: "\f328";
+  padding-right: 0.5em;
+}
+#stopwatch-record-area #stopwatch-records {
+  overflow-y: auto;
+  padding: 0 15px;
+}
+#stopwatch-record-area #stopwatch-records .record {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--main-color);
+}
+#stopwatch-record-area #stopwatch-records .record:last-child {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: none;
+}
+#stopwatch-record-area #stopwatch-records .record .times p {
+  font-size: 20px;
+}
+#stopwatch-record-area #stopwatch-records .record .times p span {
+  font-size: 16px;
+}
+/* countdown-timer-area */
+#countdown-timer-area h2::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: bold;
+  content: "\f251";
+  padding-right: 0.5em;
+}
+#countdown-timer-area .countdown-timer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 0;
+}
+#countdown-timer-area .countdown-timer .graph {
+  position: relative;
+  margin-right: 30px;
+}
+#countdown-timer-area .countdown-timer .graph svg {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  z-index: 10;
+  transform: rotate(270deg);
+}
+#countdown-timer-area .countdown-timer .graph svg circle {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: var(--main-color);
+  stroke-width: 9;
+  stroke-linecap: round;
+  transform: translate(5px, 5px);
+}
+#countdown-timer-area .countdown-timer .graph svg circle#graph-percent {
+  stroke: var(--minor-color);
+  stroke-width: 10;
+  stroke-dasharray: calc(2 * 70 * 3.1416);
+  stroke-dashoffset: calc(1 * 2 * 70 * 3.1416);
+}
+#countdown-timer-area .countdown-timer .graph .percent {
+  position: absolute;
+  top: 0;
+  left: 5px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+#countdown-timer-area .countdown-timer .graph .percent p {
+  font-size: 16px;
+}
+#countdown-timer-area .countdown-timer .graph .percent #percent-number {
+  font-size: 36px;
+}
+#countdown-timer-area .countdown-timer .digit {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+#countdown-timer-area .countdown-timer .digit p {
+  font-size: 36px;
+}
+#countdown-timer-area .countdown-timer .digit .controls {
+  text-align: center;
+}
+@media (max-width: 576px) {
+  #countdown-timer-area .countdown-timer {
+    flex-wrap: wrap;
+  }
+  #countdown-timer-area .countdown-timer .graph {
+    margin: 0 30px;
+  }
+}
+/* status-area */
+#status-area h2::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: bold;
+  content: "\f012";
+  padding-right: 0.5em;
+}
+#status-area .stopwatch,
+#status-area .countdown-timer {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 10px;
+  margin: 20px 0;
+  border: 1px solid var(--main-color);
+  font-size: 20px;
+}
+#status-area .timers {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin: 20px 0;
+  border: 1px solid var(--main-color);
+  font-size: 20px;
+}
+#status-area .stopwatch::before {
+  position: absolute;
+  top: 1.5em;
+  transform: translateY(-35%);
+  left: 1em;
+  font-family: "Font Awesome 5 Free";
+  font-weight: bold;
+  content: "\f2f2";
+  color: var(--main-color);
+  padding-right: 1em;
+}
+#status-area .countdown-timer::before {
+  position: absolute;
+  top: 1.5em;
+  transform: translateY(-35%);
+  left: 1em;
+  font-family: "Font Awesome 5 Free";
+  font-weight: bold;
+  content: "\f251";
+  color: var(--main-color);
+  padding-right: 1em;
+}
+#status-area .timers::before {
+  position: absolute;
+  top: 1.5em;
+  transform: translateY(-35%);
+  left: 1em;
+  font-family: "Font Awesome 5 Free";
+  font-weight: normal;
+  content: "\f017";
+  color: var(--main-color);
+  padding-right: 1em;
+}
+#status-area .activation,
+#status-area .suspension,
+#status-area .standby {
+  display: none;
+  margin: 10px 50px;
+}
+#status-area .activation.show {
+  display: inline-block;
+  color: var(--activation-color);
+}
+#status-area .suspension.show {
+  display: inline-block;
+  color: var(--suspension-color);
+}
+#status-area .standby.show {
+  display: inline-block;
+  color: var(--standby-color);
+}
+#status-area .content {
+  margin: 10px;
+}
+#status-area .stopwatch .light,
+#status-area .countdown-timer .light {
+  position: absolute;
+  display: inline-block;
+  top: 1.5em;
+  right: 1em;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+#status-area .stopwatch .light.red,
+#status-area .countdown-timer .light.red {
+  background-color: var(--activation-color);
+}
+#status-area .stopwatch .light.orange,
+#status-area .countdown-timer .light.orange {
+  background-color: var(--suspension-color);
+}
+#status-area .stopwatch .light.green,
+#status-area .countdown-timer .light.green {
+  background-color: var(--standby-color);
+}
+#status-area .timers .chart-container {
+  position: relative;
+  width: 100%;
+  padding-top: 20px;
+}
+@media (max-width: 576px) {
+  #status-area .stopwatch,
+  #status-area .countdown-timer {
+    flex-direction: column;
+  }
+  #status-area .timers .content {
+    margin: 10px 10px 10px 50px;
+  }
+  #status-area .timers .chart-container {
+    padding: 0;
+  }
+}
+/* control-area */
+#control-area h2::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: bold;
+  content: "\f1de";
+  padding-right: 0.5em;
+}
+#control-area > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+#control-area > div:last-child {
+  align-items: flex-start;
+}
+#control-area > div span {
+  display: inline-block;
+  margin: 10px 0;
+}
+#control-area .mode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#control-area .mode #mode-toggle {
+  appearance: none;
+  cursor: pointer;
+  height: 30px;
+  width: 60px;
+  border-radius: 16px;
+  display: inline-block;
+  position: relative;
+  margin: 0;
+  border: 2px solid var(--main-color);
+  background: var(--main-color);
+  transition: all 0.2s ease;
+}
+#control-area .mode #mode-toggle:focus {
+  outline: 0;
+}
+#control-area .mode #mode-toggle::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--minor-color);
+  transition: all 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
+}
+#control-area .mode #mode-toggle:checked {
+  background: var(--main-color);
+}
+#control-area .mode #mode-toggle:checked::after {
+  transform: translatex(30px);
+}
+#control-area .mode #mode-status.light::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: normal;
+  content: "\f185";
+  padding-left: 0.5em;
+}
+#control-area .mode #mode-status.dark::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: normal;
+  content: "\f186";
+  padding-left: 0.5em;
+}
+#control-area input {
+  margin: 10px;
+}
+#control-area .input-columns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+#control-area .input-columns input {
+  width: 5em;
+}
+#control-area .instruction {
+  box-sizing: border-box;
+  width: calc(100% / 3);
+  padding: 0 30px;
+}
+#control-area .instruction ul {
+  color: var(--text-color);
+  margin: 0;
+}
+#control-area .instruction ul li {
+  line-height: 1.5;
+}
+@media (max-width: 768px) {
+  #control-area .instruction {
+    width: 100%;
+  }
+}
+@media (max-width: 576px) {
+  #control-area > div {
+    flex-direction: column;
+  }
+}
+/* timer-area */
+#timer-area h2::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: normal;
+  content: "\f017";
+  padding-right: 0.5em;
+}
+#timer-area #timer-columns {
+  overflow-y: auto;
+  padding: 0 15px;
+}
+#timer-area .timer {
+  padding: 0 20px 20px;
+  margin: 20px 0;
+  text-align: center;
+  border: 1px solid var(--main-color);
+  border-radius: 10px;
+}
+#timer-area .timer .times p {
+  font-size: 20px;
+}
+#timer-area .controls {
+  font-size: 0;
+}

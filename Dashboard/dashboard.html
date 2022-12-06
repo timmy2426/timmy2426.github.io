@@ -1,0 +1,140 @@
+<link rel="stylesheet" href="https://tadralling.com/dist/dashboard/dashboard.min.css">
+<script src="https://tadralling.com/dist/chart.js/dist/chart.min.js"></script>
+<script src="https://tadralling.com/dist/dashboard/dashboard.min.js"></script>
+<div id="dashboard">
+    <div id="time-area">
+        <h2>現在時間</h2>
+        <p>
+            <span id="hrs"></span>:<span id="min"></span>:<span id="sec"></span><span id="session"></span>
+        </p>
+        <p class="date">
+            <span id="yer"></span>年<span id="mon"></span>月<span id="day"></span>日<span id="weeks"></span>
+        </p>
+    </div>
+    <div id="stopwatch-area">
+        <h2>馬表</h2>
+        <p>
+            <span id="s-hrs">00</span>:<span id="s-min">00</span>:<span id="s-sec">00</span><span class="dot">.</span><span id="s-tms">00</span>
+        </p>
+        <div class="controls">
+            <div>
+                <button id="s-start-pause">開始</button>
+                <button id="s-reset">歸零</button>
+            </div>
+            <div>
+                <button id="s-record">紀錄</button>
+                <button id="s-clean">清理</button>
+            </div>
+        </div>
+    </div>
+    <div id="stopwatch-record-area">
+        <h2>馬表紀錄</h2>
+        <div id="stopwatch-records"></div>
+    </div>
+    <div id="countdown-timer-area">
+        <h2>倒數計時器</h2>
+        <div class="countdown-timer">
+            <div class="graph">
+                <svg>
+                    <circle cx="70" cy="70" r="70"></circle>
+                    <circle id="graph-percent" cx="70" cy="70" r="70"></circle>
+                </svg>
+                <div class="percent">
+                    <p><span id="percent-number">00</span> %</p>
+                </div>
+            </div>
+            <div class="digit">
+                <p>
+                    <span id="c-hrs">00</span>:<span id="c-min">00</span>:<span id="c-sec">00</span>
+                </p>
+                <div class="controls">
+                    <button id="c-start-pause">開始</button>
+                    <button id="c-reset">重設</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="status-area">
+        <h2>狀態列</h2>
+        <div class="stopwatch">
+            <span class="activation">啟動</span>
+            <span class="suspension">暫停</span>
+            <span class="standby">待機</span>
+            <span class="content">共 <span id="stopwatch-record-count">0</span> 筆記錄</span>
+            <div class="light"></div>
+        </div>
+        <div class="countdown-timer">
+            <span class="activation">啟動</span>
+            <span class="suspension">暫停</span>
+            <span class="standby">待機</span>
+            <span class="content">剩餘 <span id="countdown-timer-percent">00</span> %</span>
+            <div class="light"></div>
+        </div>
+        <div class="timers">
+            <span class="content">共 <span id="timer-count">0</span> 台計時器</span>
+            <div class="chart-container">
+                <canvas id="status-chart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div id="control-area">
+        <h2>控制台</h2>
+        <div>
+            <span>顯示主題：</span>
+            <div class="mode">
+                <input type="checkbox" id="mode-toggle">
+                <span id="mode-status" class="light"></span>
+            </div>
+        </div>
+        <div>
+            <span>設定倒數計時器：</span>
+            <div class="input-columns">
+                <input id="input-c-hrs" type="text" placeholder="00">
+                <span>時</span>
+                <input id="input-c-min" type="text" placeholder="00">
+                <span>分</span>
+                <input id="input-c-sec" type="text" placeholder="00">
+                <span>秒</span>
+            </div>
+            <button id="send">送出</button>
+        </div>
+        <div>
+            <span>新增計時器：</span>
+            <input id="input-timer-name" type="text" placeholder="計時器名稱">
+            <button id="t-build">新增</button>
+            <button id="t-clean">清理</button>
+        </div>
+        <div>
+            <div class="instruction">
+                <h3>馬表</h3>
+                <ul>
+                    <li>使用開始(暫停) / 歸零控制馬表。</li>
+                    <li>使用紀錄 / 清理管理馬表紀錄。</li>
+                    <li>網頁重整可保留馬表數值，且紀錄不會丟失。</li>
+                </ul>
+            </div>
+            <div class="instruction">
+                <h3>倒數計時器</h3>
+                <ul>
+                    <li>在設定倒數計時器欄位內填入數字。</li>
+                    <li>自動加總時分秒，最大值為99時59分59秒。</li>
+                    <li>時間到會自動無限循環撥放鈴聲，可按暫停或重設關閉。</li>
+                    <li>網頁重整可保留倒數計時器數值。</li>
+                </ul>
+            </div>
+            <div class="instruction">
+                <h3>計時器</h3>
+                <ul>
+                    <li>在新增計時器欄位內填入自訂名稱。</li>
+                    <li>可同時執行多個計時器，並不衝突。</li>
+                    <li>使用清理按鈕清除所有計時器。</li>
+                    <li>網頁重整可保留已建立的計時器，且數值仍在。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="timer-area">
+        <h2>計時器</h2>
+        <div id="timer-columns"></div>
+    </div>
+</div>
