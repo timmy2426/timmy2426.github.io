@@ -1,5 +1,5 @@
 /* font */
-@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css");
+@import url("font/font-awesome-5-free/css/all.min.css");
 @font-face {
   font-family: RobotoMono;
   src: url("font/RobotoMono-VariableFont_wght.ttf");
