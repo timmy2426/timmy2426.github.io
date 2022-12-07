@@ -2,7 +2,7 @@
 @import url("https://tadralling.com/dist/font-awesome-5-free/css/all.min.css");
 @font-face {
   font-family: RobotoMono;
-  src: url("https://tadralling.com/dist/font/RobotoMono-VariableFont_wght.ttf");
+  src: url("font/RobotoMono-VariableFont_wght.ttf");
 }
 /* light-mode */
 :root {

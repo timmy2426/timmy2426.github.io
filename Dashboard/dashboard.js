@@ -63,9 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let lastTimerCount = { activation: 0, suspension: 0, standby: 0 };
 
   // object declaration
-  let ringtone = new Audio(
-    "https://tadralling.com/dist/dashboard/digital-alarm.mp3"
-  );
+  let ringtone = new Audio("digital-alarm.mp3");
   ringtone.loop = true;
   let statusChart = new Chart(document.getElementById("status-chart"), config);
   Chart.defaults.font.size = 20;
@@ -174,9 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
       let btn = e.target.dataset.id;
       let index = timerIdList.indexOf(parseInt(btn));
       if (start.innerHTML === "開始") {
-        let counter = new Worker(
-          "https://tadralling.com/dist/dashboard/counter.min.js"
-        );
+        let counter = new Worker("counter.js");
         counter.postMessage({ count: timerList[index].count });
         counter.onmessage = function (e) {
           let count = e.data.count;
@@ -597,9 +593,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // stopwatch
   document.querySelector("#s-start-pause").onclick = function () {
     if (document.querySelector("#s-start-pause").innerHTML === "開始") {
-      let counter = new Worker(
-        "https://tadralling.com/dist/dashboard/counter.min.js"
-      );
+      let counter = new Worker("counter.js");
       counter.postMessage({ count: stopwatchCount });
       counter.onmessage = function (e) {
         let count = e.data.count;
@@ -707,9 +701,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelector("#c-start-pause").onclick = function () {
     if (countdownTimerCount !== 0) {
       if (document.querySelector("#c-start-pause").innerHTML === "開始") {
-        let countdown = new Worker(
-          "https://tadralling.com/dist/dashboard/countdown.min.js"
-        );
+        let countdown = new Worker("countdown.js");
         countdown.postMessage({ count: countdownTimerCount });
         countdown.onmessage = function (e) {
           let count = e.data.count;
