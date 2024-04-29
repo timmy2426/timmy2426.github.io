@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // object declaration
   let ringtone = new Audio(
-    "https://tadralling.com/dist/dashboard/digital-alarm.mp3"
+    "https://timmy2426.github.io/Dashboard/digital-alarm.mp3"
   );
   ringtone.loop = true;
   let statusChart = new Chart(document.getElementById("status-chart"), config);
@@ -175,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
       let index = timerIdList.indexOf(parseInt(btn));
       if (start.innerHTML === "開始") {
         let counter = new Worker(
-          "https://tadralling.com/dist/dashboard/counter.min.js"
+          "https://timmy2426.github.io/Dashboard/counter.min.js"
         );
         counter.postMessage({ count: timerList[index].count });
         counter.onmessage = function (e) {
@@ -598,7 +598,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelector("#s-start-pause").onclick = function () {
     if (document.querySelector("#s-start-pause").innerHTML === "開始") {
       let counter = new Worker(
-        "https://tadralling.com/dist/dashboard/counter.min.js"
+        "https://timmy2426.github.io/Dashboard/counter.min.js"
       );
       counter.postMessage({ count: stopwatchCount });
       counter.onmessage = function (e) {
@@ -708,7 +708,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (countdownTimerCount !== 0) {
       if (document.querySelector("#c-start-pause").innerHTML === "開始") {
         let countdown = new Worker(
-          "https://tadralling.com/dist/dashboard/countdown.min.js"
+          "https://timmy2426.github.io/Dashboard/countdown.min.js"
         );
         countdown.postMessage({ count: countdownTimerCount });
         countdown.onmessage = function (e) {
