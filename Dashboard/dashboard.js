@@ -63,7 +63,9 @@ document.addEventListener("DOMContentLoaded", function () {
   let lastTimerCount = { activation: 0, suspension: 0, standby: 0 };
 
   // object declaration
-  let ringtone = new Audio("digital-alarm.mp3");
+  let ringtone = new Audio(
+    "https://tadralling.com/dist/dashboard/digital-alarm.mp3"
+  );
   ringtone.loop = true;
   let statusChart = new Chart(document.getElementById("status-chart"), config);
   Chart.defaults.font.size = 20;
@@ -173,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
       let index = timerIdList.indexOf(parseInt(btn));
       if (start.innerHTML === "開始") {
         let counter = new Worker(
-          "https://timmy2426.github.io/Dashboard/counter.js"
+          "https://tadralling.com/dist/dashboard/counter.min.js"
         );
         counter.postMessage({ count: timerList[index].count });
         counter.onmessage = function (e) {
@@ -519,10 +521,10 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       statusChart.update();
     });
-  if (localStorage.getItem("darkMode") === "true") {
-    document.querySelector("#mode-toggle").click();
-  } else if (localStorage.getItem("darkMode") === "false") {
-    return;
+  if (localStorage.getItem("darkMode")) {
+    if (localStorage.getItem("darkMode") === "true") {
+      document.querySelector("#mode-toggle").click();
+    }
   } else {
     if (
       window.matchMedia &&
@@ -596,7 +598,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelector("#s-start-pause").onclick = function () {
     if (document.querySelector("#s-start-pause").innerHTML === "開始") {
       let counter = new Worker(
-        "https://timmy2426.github.io/Dashboard/counter.js"
+        "https://tadralling.com/dist/dashboard/counter.min.js"
       );
       counter.postMessage({ count: stopwatchCount });
       counter.onmessage = function (e) {
@@ -706,7 +708,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (countdownTimerCount !== 0) {
       if (document.querySelector("#c-start-pause").innerHTML === "開始") {
         let countdown = new Worker(
-          "https://timmy2426.github.io/Dashboard/countdown.js"
+          "https://tadralling.com/dist/dashboard/countdown.min.js"
         );
         countdown.postMessage({ count: countdownTimerCount });
         countdown.onmessage = function (e) {
