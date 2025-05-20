@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>下班時間計算器</title>
+  <style>
+    :root {
+      --bg-color: #f5f5f5;
+      --container-bg: white;
+      --text-color: #333;
+      --input-border: #ddd;
+      --result-bg-normal: #c8e6c9;
+      --result-bg-late: #ffe0b2;
+      --result-bg-overnight: #ffcdd2;
+      --button-bg: #2196F3;
+      --button-hover: #1976D2;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #1a1a1a;
+      --container-bg: #2d2d2d;
+      --text-color: #ffffff;
+      --input-border: #444;
+      --result-bg-normal: #1b3b1b;
+      --result-bg-late: #4d3b1b;
+      --result-bg-overnight: #4b1b1b;
+      --button-bg: #64B5F6;
+      --button-hover: #42A5F5;
+    }
+
+    body {
+      font-family: 'Microsoft JhengHei', sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .container {
+      background-color: var(--container-bg);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0 20px 0;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 0;
+      flex-grow: 1;
+      font-size: 24px;
+    }
+
+    .theme-switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    .theme-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked+.slider {
+      background-color: #2196F3;
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(26px);
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid var(--input-border);
+      border-radius: 4px;
+      box-sizing: border-box;
+      background-color: var(--container-bg);
+      color: var(--text-color);
+      font-size: 16px;
+    }
+
+    button {
+      background-color: var(--button-bg);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: var(--button-hover);
+    }
+
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 4px;
+      display: none;
+    }
+
+    #result.normal {
+      background-color: var(--result-bg-normal);
+    }
+
+    #result.late {
+      background-color: var(--result-bg-late);
+    }
+
+    #result.overnight {
+      background-color: var(--result-bg-overnight);
+    }
+
+    /* 響應式設計斷點 */
+    /* 平板裝置 (768px 以下) */
+    @media screen and (max-width: 768px) {
+      body {
+        padding: 15px;
+      }
+
+      .container {
+        padding: 15px;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+
+      .theme-switch {
+        width: 50px;
+        height: 28px;
+      }
+
+      .slider:before {
+        height: 20px;
+        width: 20px;
+        left: 4px;
+        bottom: 4px;
+      }
+
+      input[type="number"] {
+        font-size: 14px;
+      }
+
+      button {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+    }
+
+    /* 手機裝置 (480px 以下) */
+    @media screen and (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+
+      .container {
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 18px;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .theme-switch {
+        margin-top: 10px;
+      }
+
+      .input-group {
+        margin-bottom: 10px;
+      }
+
+      label {
+        font-size: 14px;
+      }
+
+      input[type="number"] {
+        padding: 6px;
+        font-size: 14px;
+      }
+
+      button {
+        padding: 8px;
+        font-size: 14px;
+      }
+
+      #result {
+        padding: 10px;
+      }
+
+      #result h3 {
+        font-size: 16px;
+        margin: 0 0 10px 0;
+      }
+
+      #result p {
+        font-size: 14px;
+        margin: 5px 0;
+      }
+    }
+
+    /* 小型手機裝置 (320px 以下) */
+    @media screen and (max-width: 320px) {
+      h1 {
+        font-size: 16px;
+      }
+
+      .theme-switch {
+        width: 45px;
+        height: 25px;
+      }
+
+      .slider:before {
+        height: 17px;
+        width: 17px;
+      }
+
+      label {
+        font-size: 13px;
+      }
+
+      input[type="number"] {
+        font-size: 13px;
+      }
+
+      button {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>下班倒數計時器</h1>
+      <label class="theme-switch">
+        <input type="checkbox" id="theme-toggle">
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="input-group">
+      <label for="totalPatients">報到人數：</label>
+      <input type="number" id="totalPatients" min="0" required>
+    </div>
+    <div class="input-group">
+      <label for="newPatients">初診人數：</label>
+      <input type="number" id="newPatients" min="0" required>
+    </div>
+    <div class="input-group">
+      <label for="fatigueError">疲倦誤差（分鐘）：</label>
+      <input type="number" id="fatigueError" min="0" required>
+    </div>
+    <div class="input-group">
+      <label for="avgConsultTime">平均看診時間（分鐘）：</label>
+      <input type="number" id="avgConsultTime" min="0" required>
+    </div>
+    <div class="input-group">
+      <label for="newPatientConsultTime">初診看診時間（分鐘）：</label>
+      <input type="number" id="newPatientConsultTime" min="0" required>
+    </div>
+    <button onclick="calculateTime()">計算下班時間</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    // 主題切換功能
+    const themeToggle = document.getElementById('theme-toggle');
+
+    // 檢查本地存儲中的主題設置
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      themeToggle.checked = true;
+    }
+
+    // 監聽主題切換
+    themeToggle.addEventListener('change', function () {
+      if (this.checked) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+      }
+    });
+
+    // 保存輸入值到本地存儲
+    function saveInputValues() {
+      const inputs = {
+        fatigueError: document.getElementById('fatigueError').value,
+        avgConsultTime: document.getElementById('avgConsultTime').value,
+        newPatientConsultTime: document.getElementById('newPatientConsultTime').value
+      };
+      localStorage.setItem('lastInputs', JSON.stringify(inputs));
+    }
+
+    // 從本地存儲載入上次的輸入值
+    function loadLastInputs() {
+      const savedInputs = localStorage.getItem('lastInputs');
+      if (savedInputs) {
+        const inputs = JSON.parse(savedInputs);
+        document.getElementById('fatigueError').value = inputs.fatigueError;
+        document.getElementById('avgConsultTime').value = inputs.avgConsultTime;
+        document.getElementById('newPatientConsultTime').value = inputs.newPatientConsultTime;
+      }
+    }
+
+    // 為需要儲存的輸入框添加變更事件監聽器
+    const inputFields = [
+      'fatigueError',
+      'avgConsultTime',
+      'newPatientConsultTime'
+    ];
+
+    inputFields.forEach(fieldId => {
+      document.getElementById(fieldId).addEventListener('change', saveInputValues);
+    });
+
+    // 頁面載入時載入上次的輸入值
+    document.addEventListener('DOMContentLoaded', loadLastInputs);
+
+    function calculateTime() {
+      // 獲取輸入值
+      const totalPatients = parseFloat(document.getElementById('totalPatients').value);
+      const newPatients = parseFloat(document.getElementById('newPatients').value);
+      const fatigueError = parseFloat(document.getElementById('fatigueError').value);
+      const avgConsultTime = parseFloat(document.getElementById('avgConsultTime').value);
+      const newPatientConsultTime = parseFloat(document.getElementById('newPatientConsultTime').value);
+
+      // 驗證輸入
+      if (isNaN(totalPatients) || isNaN(newPatients) || isNaN(fatigueError) ||
+        isNaN(avgConsultTime) || isNaN(newPatientConsultTime)) {
+        alert('請填寫所有欄位！');
+        return;
+      }
+
+      // 保存當前輸入值
+      saveInputValues();
+
+      // 計算總時間（分鐘）
+      const totalTime = (totalPatients - newPatients) * avgConsultTime +
+        newPatients * newPatientConsultTime +
+        fatigueError;
+
+      // 計算預計下班時間
+      const now = new Date();
+      const endTime = new Date(now.getTime() + totalTime * 60000);
+
+      // 顯示結果
+      const resultDiv = document.getElementById('result');
+      resultDiv.style.display = 'block';
+
+      // 根據下班時間設置不同的背景顏色
+      if (endTime.getDate() !== now.getDate()) {
+        resultDiv.className = 'overnight';  // 跨日顯示紅色
+      } else if (endTime.getHours() >= 23) {
+        resultDiv.className = 'late';  // 23:00-24:00 顯示黃色
+      } else {
+        resultDiv.className = 'normal';  // 23:00 前顯示綠色
+      }
+
+      // 格式化時間顯示
+      const formatTime = (date) => {
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        return `${hours}:${minutes}`;
+      };
+
+      // 計算是否跨日
+      const isNextDay = endTime.getDate() !== now.getDate();
+      const timeDisplay = isNextDay ?
+        `明天 ${formatTime(endTime)}` :
+        formatTime(endTime);
+
+      resultDiv.innerHTML = `
+          <h3>計算結果：</h3>
+          <p>預計需要時間：${Math.round(totalTime)} 分鐘</p>
+          <p>預計下班時間：${timeDisplay}</p>
+      `;
+    }
+  </script>
+</body>
+
+</html>
